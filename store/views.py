@@ -30,7 +30,7 @@ class ProductViewSet(ModelViewSet):
     filterset_class = ProductFilter
     pagination_class = DefaultPagination
     permission_classes = [IsAdminOrReadOnly]
-    search_fields = ['title', 'description']
+    search_fields = ['title', 'description', 'brand','model','oem_number']
     ordering_fields = ['unit_price', 'last_update']
 
     def get_serializer_context(self):

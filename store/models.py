@@ -62,6 +62,25 @@ class Product(models.Model):
         Collection, on_delete=models.PROTECT, related_name='products')
     promotions = models.ManyToManyField(Promotion, blank=True)
     vendor = models.ForeignKey(Vendor, on_delete=models.PROTECT, related_name='products', null=True, blank=True) #Remove null and blank
+    CONDITION_CHOICES = [
+        ('new', 'New'),
+        ('used', 'Used'),
+        ('refurbished', 'Refurbished'),
+    ]
+    
+    condition = models.CharField(max_length=20, choices=CONDITION_CHOICES, default='new')
+    oem_number = models.CharField(max_length=255, blank=True, null=True)
+    brand = models.CharField(max_length=255)  # Auto brand compatibility
+    model = models.CharField(max_length=255)  # Model compatibility
+    year = models.IntegerField()  # Year compatibility
+    shipping_weight = models.FloatField()  # In kg
+    
+    def default_shipping_dimensions():
+        return {"height": 0, "width": 0, "depth": 0}
+
+    shipping_dimensions = models.JSONField(default=default_shipping_dimensions)
+    
+    
     def __str__(self) -> str:
         return self.title
 

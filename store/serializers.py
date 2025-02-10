@@ -36,7 +36,10 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'title', 'description', 'slug', 'inventory',
-                  'unit_price', 'price_with_tax', 'collection', 'images', 'vendor', 'average_rating']
+                  'unit_price', 'price_with_tax', 'collection', 'images',
+                  'vendor', 'average_rating', 'condition',
+                  'oem_number', 'brand', 'model', 'shipping_weight',
+                  'shipping_dimensions', 'year',]
 
     price_with_tax = serializers.SerializerMethodField(
         method_name='calculate_tax')
