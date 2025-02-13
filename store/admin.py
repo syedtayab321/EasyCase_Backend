@@ -7,6 +7,11 @@ from . import models
 from .models import Vendor
 
 
+admin.site.site_header = "EasyCase Admin Panel"
+admin.site.site_title = "EasyCase"
+admin.site.index_title = "Welcome to the Admin Panel"
+
+print(admin.site.site_header) 
 class InventoryFilter(admin.SimpleListFilter):
     title = 'inventory'
     parameter_name = 'inventory'
