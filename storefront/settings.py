@@ -66,8 +66,13 @@ INSTALLED_APPS = [
     "likes",
     "payments",
     "core",
+    # Allauth for Google OAuth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
-
+SITE_ID = 1
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -78,6 +83,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 INTERNAL_IPS = [
@@ -105,6 +111,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                   
             ],
         },
     },
@@ -185,17 +192,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
-AUTHENTICATION_BACKENDS = [
+AUTHENTICATION_BACKENDS = [ 
     'core.authentication.EmailBackend',  # Use the correct path to your custom authentication backend
     'django.contrib.auth.backends.ModelBackend',
+    #'social_core.backends.google.GoogleOAuth2',
+    'allauth.account.auth_backends.AuthenticationBackend',  
 ]
 
 AUTH_USER_MODEL = 'core.User'
 
-DJOSER = {
+DJOSER = {  
     'USER_ID_FIELD': 'email',
     'LOGIN_FIELD': 'email',
     
@@ -212,6 +221,7 @@ SIMPLE_JWT = {
     'USER_ID_FIELD': 'email'
 }
 
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'rehankhan.upr@gmail.com'
@@ -219,3 +229,38 @@ EMAIL_HOST_PASSWORD = 'vmcp shyl dyvw tjyb'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'EasyCase.com'
+
+FRONTEND_URL = 'http://127.0.0.1:8000'
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"
+
+ACCOUNT_LOGIN_METHODS = {"email"}  # Or "username_email" if using both
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "optional"
+
+# Custom Social Login Adapter for JWT
+ACCOUNT_ADAPTER = "core.adapters.CustomAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "core.adapters.CustomSocialAccountAdapter"
+
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '220013202960-abtnqp3ebgi6uu0cvptqgupk2oe9u6ep.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        },
+         'OAUTH_PKCE_ENABLED': True,  # Ensures OAuth security
+        'SCOPE': ['email', 'profile'],
+        'AUTH_PARAMS': {'prompt': 'select_account'}  # Forces account selection
+    }
+}
+# TWILIO_ACCOUNT_SID = "AC1b003bb0422a34e0c51966e3384e33a9"
+# TWILIO_AUTH_TOKEN = "a7a0b017a1a9263a9016c67724d39707"
+# TWILIO_PHONE_NUMBER = "+923160854067"
+
+TWILIO_ACCOUNT_SID = "AC5e8602a43b557c3b4c0994ea6ae321f5"
+TWILIO_AUTH_TOKEN = "bcf31b892ea830fbdf96c29c873f5523"
+TWILIO_PHONE_NUMBER = "+12014318027"

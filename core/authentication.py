@@ -1,19 +1,13 @@
 from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth import get_user_model
+from core.models import User  # Import your User model
 
 class EmailBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
-        UserModel = get_user_model()
         try:
-            user = UserModel.objects.get(email=username)
+            user = User.objects.get(email=username)
+            if not user.is_verified:  # Check if OTP is verified
+                return None  # Block login if not verified
             if user.check_password(password):
                 return user
-        except UserModel.DoesNotExist:
-            return None
-
-    def get_user(self, user_id):
-        UserModel = get_user_model()
-        try:
-            return UserModel.objects.get(pk=user_id)
-        except UserModel.DoesNotExist:
+        except User.DoesNotExist:
             return None

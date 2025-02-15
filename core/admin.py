@@ -14,15 +14,16 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'password1', 'password2', 'password', 'first_name', 'last_name'),
         }),
     )
+    
+    list_display = ('email', 'username', 'is_verified', 'is_active', 'is_staff')  # Add is_verified
+    list_filter = ('is_verified', 'is_active', 'is_staff')
 
 class TagInline(GenericTabularInline):
     autocomplete_fields = ['tag']
     model = TaggedItem
 
-
 class CustomProductAdmin(ProductAdmin):
     inlines = [TagInline, ProductImageInline]
-
 
 admin.site.unregister(Product)
 admin.site.register(Product, CustomProductAdmin)

@@ -20,6 +20,10 @@ django-environ = "*"
 requests = "*"
 psycopg2-binary = "*"
 environ = "*"
+pyjwt = "*"
+django-allauth = "*"
+twilio = "*"
+dj-rest-auth = "*"
 
 [dev-packages]
 autopep8 = "*"

@@ -70,10 +70,10 @@ class Product(models.Model):
     
     condition = models.CharField(max_length=20, choices=CONDITION_CHOICES, default='new')
     oem_number = models.CharField(max_length=255, blank=True, null=True)
-    brand = models.CharField(max_length=255)  # Auto brand compatibility
-    model = models.CharField(max_length=255)  # Model compatibility
-    year = models.IntegerField()  # Year compatibility
-    shipping_weight = models.FloatField()  # In kg
+    brand = models.CharField(max_length=255, blank=True, null=True)  # Auto brand compatibility
+    model = models.CharField(max_length=255, blank=True, null=True)  # Model compatibility
+    year = models.IntegerField(blank=True, null=True)  # Year compatibility
+    shipping_weight = models.FloatField(blank=True, null=True)  # In kg
     
     def default_shipping_dimensions():
         return {"height": 0, "width": 0, "depth": 0}

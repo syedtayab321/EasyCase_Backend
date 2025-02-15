@@ -34,6 +34,10 @@ urlpatterns = [
     path('auth/', include('djoser.urls.jwt')),
     path('auth/logout/', logout, name='logout'),
     path('__debug__/', include(debug_toolbar.urls)),
+    path('', include('core.urls')),
+    path('auth/', include('allauth.urls')),
+    path('auth/social/', include('allauth.socialaccount.urls')), 
+
 ]  
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
