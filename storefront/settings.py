@@ -60,13 +60,11 @@ INSTALLED_APPS = [
     "djoser",  # Depends on DRF and JWT
     "django_filters",  # Useful for DRF filtering  # Should be after adminlte3 for theme loading
     "debug_toolbar",  # Generally doesn't depend on other apps, but can be app-specific
-    "playground",  # Your apps
     "store",
-    "tags",
-    "likes",
     "payments",
     "core",
     # Allauth for Google OAuth
+    'tags',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
