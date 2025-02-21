@@ -42,7 +42,8 @@ SECRET_KEY = 'django-insecure-hs6j037urx6iav+7#10%-vu4l4f5@@-1_zo)oft4g7$vf2$jmp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+AALLOWED_HOSTS = ['storefront.onrender.com', 'localhost']
+
 
 
 # Application definition
@@ -82,6 +83,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 INTERNAL_IPS = [
@@ -91,8 +94,7 @@ INTERNAL_IPS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8001",
-    "http://127.0.0.1:8001",
+    "https://your-react-app.vercel.app",
     "http://localhost:3000",
 ]
 
@@ -262,3 +264,6 @@ SOCIALACCOUNT_PROVIDERS = {
 TWILIO_ACCOUNT_SID = "AC5e8602a43b557c3b4c0994ea6ae321f5"
 TWILIO_AUTH_TOKEN = "bcf31b892ea830fbdf96c29c873f5523"
 TWILIO_PHONE_NUMBER = "+12014318027"
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
